@@ -19,16 +19,19 @@ module.exports = {
 	entry: {
 		// 如果入口写了两个，那就会打包出来两个， 也就是默认只会根据入口，形成依赖图，只输出一个index.js
 		// 这也是代码分离的其中一个方式，如果在index和print 里面都引入了math，那么math 就会打包到这两个文件中，这属于重复
-		//打包，应该是打包一次，然后引入。 这个时候commonsChunkPlugin 派上用场了，
+		//打包，应该是打包一次，然后引入。 这个时候commonsChunkPlugin,也就是splitChunk 派上用场了，
 		// 
 		index: './src/index.js',
    		print: './src/print.js',
-		// app: './src/index.js'
+   		math: './src/math.js',
+		app: './src/reactFrame/App.js'
+		// 当某些模块在不同的模块中被引用时，配置shared，可以在多个模块之间共享
 	},
 	output: {
 		filename: '[name].[contenthash].bundle.js',
+		chunkFilename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/',
+		// publicPath: '/',
 		clean: true,
 		// assetModuleFilename: "asset",
 		// publicPath: "./asset"
@@ -39,19 +42,18 @@ module.exports = {
 			title: "王剑锋",
 			template: "./src/index.html"
 		}),
-		new webpack.optimize.CommonsChunkPlugin({
-	       name: 'common' // 指定公共 bundle 的名称。
-	    }),
+		// webpack4以后，被废弃，使用splitChunk
+		// new webpack.optimize.CommonsChunkPlugin({
+	    //    name: 'common' // 指定公共 bundle 的名称。
+	    // }),
 		// 生成manifest
 		new WebpackManifestPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		// new webpack.DefinePlugin({
 		//     'process.env.NODE_ENV': JSON.stringify('production')
 		// })
-			
 		// https://www.webpackjs.com/guides/hot-module-replacement/#%E5%90%AF%E7%94%A8-hmr 以便更容易查看要修补(patch)的依赖。
 		// new webpack.NamedModulesPlugin(),
-
 	],
 	devtool: "inline-source-map",
 	// 启用watch模式，在初始构建以后，webpack将需监听任何已解析文件的更改
@@ -83,17 +85,17 @@ module.exports = {
 	},
 	optimization: {
 		// 将 runtime代码拆分为一个单独的 chunk，也就是可以将runtime单独打包出来
-		runtimeChunk: "single",
+		// runtimeChunk: "single",
 		// 这个是由于moduleId，打包出来的bundle会随着自身的module.id的变化而变化，但是我们不希望三方bundle的id变化，那就进行这个配置
-		moduleIds: 'deterministic',
+		// moduleIds: 'deterministic',
+	
+		// 这表明将选择哪些 chunk 进行优化。当提供一个字符串，有效值为 all，async 和 initial。
+		// 设置为 all 可能特别强大，因为这意味着 chunk 可以在异步和非异步 chunk 之间共享。
+
+
+		// 当index.js 和 print.js 中有一个引入了lodash，那么就会打出一个新的包出来，并且将lodash 从index 或print 中删除
 		splitChunks: {
-			cacheGroups: {
-				vendor: {
-					test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-					name: 'vendor',
-					chunks: 'all',
-				},
-			},
+			chunks: "all"
 		},
 	},
 	module: {
@@ -106,6 +108,16 @@ module.exports = {
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
 				type: 'asset/resource',
 			},
+			{
+				test: /\.m?(js)|(jsx)$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+				  loader: 'babel-loader',
+				  options: {
+					presets: ['@babel/preset-env', '@babel/preset-react'],
+				  }
+				}
+			  }
 		],
 	},
 };
