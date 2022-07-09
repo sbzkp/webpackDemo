@@ -15,20 +15,31 @@ app.get('/', function (req, res) {
         res.send('Hello2323 World!');
     }, 1000)
 })
+app.get('/style', function (req, res) {
+    res.set("access-control-allow-origin", "*")
+    res.type('text/css');
+    // res.set("Cache-Control", "no-store")
+   
+
+    setTimeout(()=>{
+        res.sendFile('/Users/fenghuajuedai/Desktop/study/webpackDemo/src/test/test.css')
+    }, 1000)
+})
 app.get('/test', function (req, res) {
     res.type('application/javascript');
     res.set("access-control-allow-origin", "*")
     setTimeout(()=>{
-        res.sendFile('/Users/admin/Desktop/study/webpackDemo-master/src/test/test.js')
-    }, 3000)
+        res.sendFile('/Users/fenghuajuedai/Desktop/study/webpackDemo/src/test/test.js')
+    }, 1000)
 })
+
 
 app.get('/time', function (req, res) {
     console.log("time time time")
     res.type('application/javascript');
     res.set("access-control-allow-origin", "*")
     setTimeout(()=>{
-        res.sendFile('/Users/admin/Desktop/study/webpackDemo-master/src/test/test.js')
+        res.sendFile('/Users/fenghuajuedai/Desktop/study/webpackDemo/src/test/test.js')
     }, 1000)
 })
 

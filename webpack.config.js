@@ -21,10 +21,10 @@ module.exports = {
 		// 这也是代码分离的其中一个方式，如果在index和print 里面都引入了math，那么math 就会打包到这两个文件中，这属于重复
 		//打包，应该是打包一次，然后引入。 这个时候commonsChunkPlugin,也就是splitChunk 派上用场了，
 		// 
-		index: './src/index.js',
-   		print: './src/print.js',
+		// index: './src/index.js',
+   		// print: './src/print.js',
    		math: './src/math.js',
-		app: './src/reactFrame/App.js'
+		// app: './src/reactFrame/App.js'
 		// 当某些模块在不同的模块中被引用时，配置shared，可以在多个模块之间共享
 	},
 	output: {
@@ -40,7 +40,9 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: "王剑锋",
-			template: "./src/index.html"
+			// template: "./src/index.html"
+			template: "./src/test/test.html"
+
 		}),
 		// webpack4以后，被废弃，使用splitChunk
 		// new webpack.optimize.CommonsChunkPlugin({
