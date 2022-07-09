@@ -19,10 +19,10 @@ app.get('/style', function (req, res) {
     res.set("access-control-allow-origin", "*")
     res.type('text/css');
     // res.set("Cache-Control", "no-store")
-   
 
     setTimeout(()=>{
-        res.sendFile('/Users/fenghuajuedai/Desktop/study/webpackDemo/src/test/test.css')
+        res.sendFile(path.join(__dirname, "test.css"));
+        // res.sendFile('/Users/fenghuajuedai/Desktop/study/webpackDemo/src/test/test.css')
     }, 1000)
 })
 app.get('/test', function (req, res) {
