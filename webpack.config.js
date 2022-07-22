@@ -23,8 +23,8 @@ module.exports = {
 		// 
 		// index: './src/index.js',
    		// print: './src/print.js',
-   		math: './src/math.js',
-		// app: './src/reactFrame/App.js'
+   		// math: './src/math.js',
+		app: './src/reactFrame/App.js'
 		// 当某些模块在不同的模块中被引用时，配置shared，可以在多个模块之间共享
 	},
 	output: {
@@ -40,8 +40,8 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: "王剑锋",
-			// template: "./src/index.html"
-			template: "./src/test/test.html"
+			template: "./src/index.html"
+			// template: "./src/test/test.html"
 
 		}),
 		// webpack4以后，被废弃，使用splitChunk

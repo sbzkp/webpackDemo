@@ -5,5 +5,7 @@ import SelfUseEffect from './selfUseEffect.jsx';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import TestUnmount from './TestUnmount.jsx'
+import Parent from './context/praent.jsx'
 
-ReactDOM.createRoot(document.getElementById('dynamic-example')).render( <TestUnmount /> )
+
+ReactDOM.createRoot(document.getElementById('dynamic-example')).render( <Parent /> )
